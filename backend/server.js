@@ -19,26 +19,61 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // CORS configuration
-const allowedOrigins = [
+// Parses single or comma-separated CLIENT_URL values and strips trailing slashes
+const rawClientUrls = process.env.CLIENT_URL
+  ? process.env.CLIENT_URL.split(',').map((u) => u.trim()).filter(Boolean)
+  : [];
+
+const localOrigins = [
   'http://localhost:3000',
   'http://localhost:5173',
-  process.env.CLIENT_URL,
-].filter(Boolean);
+  'http://127.0.0.1:3000',
+  'http://127.0.0.1:5173',
+];
+
+const normalizedAllowedOrigins = [...localOrigins, ...rawClientUrls].map((url) =>
+  url.replace(/\/+$/, '')
+);
 
 app.use(
   cors({
     origin: function (origin, callback) {
-      // Allow requests with no origin (like mobile apps, curl, or postman)
+      // Allow requests with no origin (e.g. mobile apps, curl, Postman, server-to-server)
       if (!origin) return callback(null, true);
-      if (
-        allowedOrigins.indexOf(origin) !== -1 ||
-        process.env.NODE_ENV !== 'production'
-      ) {
+
+      const normalizedOrigin = origin.replace(/\/+$/, '');
+
+      // Check exact match in configured allowed origins
+      if (normalizedAllowedOrigins.includes(normalizedOrigin)) {
         return callback(null, true);
       }
-      return callback(new Error('CORS policy does not allow access from this origin'));
+
+      // In non-production environments or if CLIENT_URL is set to '*', permit origin
+      if (process.env.NODE_ENV !== 'production' || process.env.CLIENT_URL === '*') {
+        return callback(null, true);
+      }
+
+      // Allow preview / branch subdomains if the root domain is configured
+      const isAllowedDomain = rawClientUrls.some((allowed) => {
+        try {
+          const allowedHost = new URL(allowed).hostname;
+          const originHost = new URL(origin).hostname;
+          return originHost === allowedHost || originHost.endsWith(`.${allowedHost}`);
+        } catch {
+          return false;
+        }
+      });
+
+      if (isAllowedDomain) {
+        return callback(null, true);
+      }
+
+      console.warn(`[CORS Blocked] Origin "${origin}" is not in the allowed list:`, normalizedAllowedOrigins);
+      return callback(new Error(`CORS policy: Origin ${origin} not allowed by Access-Control-Allow-Origin`));
     },
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
   })
 );
 

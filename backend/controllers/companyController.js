@@ -129,9 +129,14 @@ const getPopularCompanies = async (req, res, next) => {
       'NVIDIA',
     ];
 
-    const companies = await Company.find({
+    let companies = await Company.find({
       name: { $in: popularNames },
     });
+
+    // Fallback: If named popular companies are not found, fetch any available companies
+    if (!companies || companies.length === 0) {
+      companies = await Company.find().limit(12);
+    }
 
     const enriched = await Promise.all(
       companies.map(async (comp) => {

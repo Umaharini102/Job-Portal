@@ -15,6 +15,8 @@ import {
   Sparkles,
   SlidersHorizontal,
   Info,
+  AlertCircle,
+  RefreshCw,
 } from 'lucide-react';
 
 const INDIAN_LOCATIONS = [
@@ -70,6 +72,7 @@ const CompaniesPage = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
 
   // Filter states
@@ -82,6 +85,7 @@ const CompaniesPage = () => {
 
   const fetchCompanies = useCallback(async () => {
     setLoading(true);
+    setError(null);
     try {
       const params = new URLSearchParams();
       if (search.trim()) params.append('search', search.trim());
@@ -94,13 +98,28 @@ const CompaniesPage = () => {
       params.append('limit', '12');
 
       const res = await API.get(`/companies?${params.toString()}`);
-      if (res.data.success) {
-        setCompanies(res.data.companies);
-        setTotalCompanies(res.data.total);
-        setTotalPages(res.data.totalPages);
+      const data = res.data;
+
+      if (data && data.success) {
+        setCompanies(Array.isArray(data.companies) ? data.companies : []);
+        setTotalCompanies(typeof data.total === 'number' ? data.total : (data.companies?.length || 0));
+        setTotalPages(data.totalPages || 1);
+      } else if (Array.isArray(data)) {
+        setCompanies(data);
+        setTotalCompanies(data.length);
+        setTotalPages(1);
+      } else {
+        throw new Error(data?.message || 'Invalid response format from server');
       }
     } catch (err) {
       console.error('Error loading companies directory:', err);
+      const errMsg =
+        err.response?.data?.message ||
+        err.message ||
+        'Unable to connect to company server. Please verify your backend service and network.';
+      setError(errMsg);
+      setCompanies([]);
+      setTotalCompanies(0);
     } finally {
       setLoading(false);
     }
@@ -139,6 +158,8 @@ const CompaniesPage = () => {
     companySize !== 'All',
     verifiedOnly,
   ].filter(Boolean).length;
+
+  const isFiltered = activeFiltersCount > 0 || Boolean(search.trim());
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
@@ -323,6 +344,31 @@ const CompaniesPage = () => {
         </p>
       </div>
 
+      {/* Error Banner */}
+      {error && !loading && (
+        <div className="bg-rose-50 border border-rose-200 rounded-3xl p-8 sm:p-12 text-center max-w-lg mx-auto space-y-4 shadow-sm">
+          <div className="w-14 h-14 bg-rose-100 rounded-2xl flex items-center justify-center mx-auto text-rose-600">
+            <AlertCircle className="w-7 h-7" />
+          </div>
+          <div className="space-y-1">
+            <h3 className="font-extrabold text-slate-900 text-lg">Unable to load company records</h3>
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-sm mx-auto">
+              {error}
+            </p>
+          </div>
+          <div className="pt-2">
+            <button
+              type="button"
+              onClick={() => fetchCompanies()}
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs rounded-xl shadow-sm transition-all"
+            >
+              <RefreshCw className="w-3.5 h-3.5" />
+              <span>Retry Connection</span>
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Companies Grid */}
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -333,28 +379,46 @@ const CompaniesPage = () => {
             />
           ))}
         </div>
-      ) : companies.length === 0 ? (
-        <div className="bg-white rounded-3xl p-16 text-center border border-slate-200/90 shadow-sm max-w-lg mx-auto space-y-4">
-          <Building2 className="w-14 h-14 text-slate-300 mx-auto" />
-          <h3 className="font-extrabold text-slate-900 text-lg">No companies matched your criteria</h3>
-          <p className="text-xs sm:text-sm text-slate-500">
-            Try adjusting your search query, clearing filters, or switching company categories.
-          </p>
-          <button
-            type="button"
-            onClick={handleResetFilters}
-            className="px-5 py-2.5 bg-brand-600 text-white font-bold text-xs rounded-xl shadow-sm hover:bg-brand-700 transition-all"
-          >
-            Clear All Filters
-          </button>
-        </div>
-      ) : (
+      ) : !error && companies.length === 0 ? (
+        isFiltered ? (
+          <div className="bg-white rounded-3xl p-16 text-center border border-slate-200/90 shadow-sm max-w-lg mx-auto space-y-4">
+            <Building2 className="w-14 h-14 text-slate-300 mx-auto" />
+            <h3 className="font-extrabold text-slate-900 text-lg">No companies matched your criteria</h3>
+            <p className="text-xs sm:text-sm text-slate-500">
+              Try adjusting your search query, clearing filters, or switching company categories.
+            </p>
+            <button
+              type="button"
+              onClick={handleResetFilters}
+              className="px-5 py-2.5 bg-brand-600 text-white font-bold text-xs rounded-xl shadow-sm hover:bg-brand-700 transition-all"
+            >
+              Clear All Filters
+            </button>
+          </div>
+        ) : (
+          <div className="bg-white rounded-3xl p-16 text-center border border-slate-200/90 shadow-sm max-w-lg mx-auto space-y-4">
+            <Building2 className="w-14 h-14 text-slate-300 mx-auto" />
+            <h3 className="font-extrabold text-slate-900 text-lg">No companies available at the moment.</h3>
+            <p className="text-xs sm:text-sm text-slate-500">
+              Company directory records will appear here once added or seeded in the backend.
+            </p>
+            <button
+              type="button"
+              onClick={() => fetchCompanies()}
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-brand-600 text-white font-bold text-xs rounded-xl shadow-sm hover:bg-brand-700 transition-all mx-auto"
+            >
+              <RefreshCw className="w-3.5 h-3.5" />
+              <span>Refresh Directory</span>
+            </button>
+          </div>
+        )
+      ) : !error ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {companies.map((company) => (
             <CompanyCard key={company._id} company={company} />
           ))}
         </div>
-      )}
+      ) : null}
 
       {/* Pagination */}
       {totalPages > 1 && (

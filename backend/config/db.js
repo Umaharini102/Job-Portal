@@ -1,9 +1,12 @@
 const mongoose = require('mongoose');
+const { initDatabase } = require('../services/initDB');
 
 const connectDB = async () => {
   try {
     const conn = await mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/jobconnect');
     console.log(`[MongoDB] Connected successfully: ${conn.connection.host}/${conn.connection.name}`);
+    // Auto-verify and seed companies catalog if database is fresh
+    await initDatabase();
   } catch (error) {
     console.error(`[MongoDB] Connection Error: ${error.message}`);
     process.exit(1);
