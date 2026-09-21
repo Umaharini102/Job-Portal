@@ -1,0 +1,37 @@
+# Node dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+!.env.example
+
+# Build directories
+dist/
+build/
+
+# Uploaded user files (keep folder intact)
+backend/uploads/*
+!backend/uploads/.gitkeep
+!backend/uploads/avatars/
+!backend/uploads/logos/
+!backend/uploads/resumes/
+backend/uploads/avatars/*
+backend/uploads/logos/*
+backend/uploads/resumes/*
+!backend/uploads/avatars/.gitkeep
+!backend/uploads/logos/.gitkeep
+!backend/uploads/resumes/.gitkeep
+
+# System & IDE files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log
