@@ -16,6 +16,17 @@ const normalizeCategory = (cat) => {
 // @access  Public
 const getCompanies = async (req, res, next) => {
   try {
+    if (mongoose.connection.readyState !== 1) {
+      return res.status(503).json({
+        success: false,
+        message:
+          'Database is currently disconnected. Please verify that MONGO_URI is set in your Render environment variables and that MongoDB Atlas allows access from anywhere (0.0.0.0/0).',
+        companies: [],
+        total: 0,
+        totalPages: 0,
+      });
+    }
+
     const {
       search,
       category,
@@ -114,6 +125,14 @@ const getCompanies = async (req, res, next) => {
 // @access  Public
 const getPopularCompanies = async (req, res, next) => {
   try {
+    if (mongoose.connection.readyState !== 1) {
+      return res.status(503).json({
+        success: false,
+        message: 'Database is currently disconnected.',
+        companies: [],
+      });
+    }
+
     const popularNames = [
       'Tata Consultancy Services (TCS)',
       'Infosys',

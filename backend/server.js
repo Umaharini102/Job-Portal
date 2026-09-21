@@ -3,10 +3,11 @@ const path = require('path');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const morgan = require('morgan');
-const connectDB = require('./config/db');
+const { connectDB, getDbStatus } = require('./config/db');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
-// Load environment variables
+// Load environment variables (supports both root .env and backend/.env)
+dotenv.config({ path: path.join(__dirname, '.env') });
 dotenv.config();
 
 // Connect to MongoDB
@@ -100,9 +101,15 @@ app.get('/', (req, res) => {
   const mongoose = require('mongoose');
   const states = ['disconnected', 'connected', 'connecting', 'disconnecting'];
   const dbState = states[mongoose.connection.readyState] || 'unknown';
+  const dbInfo = getDbStatus();
+
   res.status(200).json({
     message: 'JobConnect REST API Server is online',
     database: dbState,
+    databaseDetails: {
+      envVarDetected: dbInfo.detectedEnvVar,
+      lastError: dbInfo.lastError,
+    },
     health: '/api/health',
     companies: '/api/companies',
   });
@@ -113,9 +120,15 @@ app.get('/api/health', (req, res) => {
   const mongoose = require('mongoose');
   const states = ['disconnected', 'connected', 'connecting', 'disconnecting'];
   const dbState = states[mongoose.connection.readyState] || 'unknown';
+  const dbInfo = getDbStatus();
+
   res.status(200).json({
-    status: 'healthy',
+    status: dbState === 'connected' ? 'healthy' : 'degraded',
     database: dbState,
+    databaseDetails: {
+      envVarDetected: dbInfo.detectedEnvVar,
+      lastError: dbInfo.lastError,
+    },
     timestamp: new Date().toISOString(),
     service: 'JobConnect API',
   });
