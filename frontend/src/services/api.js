@@ -23,13 +23,8 @@ export const resolveBaseUrl = () => {
       return 'http://localhost:5000/api';
     }
 
-    console.warn(
-      '[JobConnect] Notice: VITE_API_URL is not configured in the build environment. ' +
-      'API requests will default to relative /api. If your backend is hosted separately ' +
-      '(e.g., on Render or Railway), configure VITE_API_URL=https://<your-backend>.onrender.com/api ' +
-      'in your frontend deployment settings (e.g., Vercel / Netlify).'
-    );
-    return '/api';
+    // In production, default directly to your deployed Render backend
+    return 'https://job-portal-1how-to-deploy.onrender.com/api';
   }
 
   // Clean trailing slashes

@@ -4,7 +4,8 @@
   "description": "JobConnect — Full-Stack LinkedIn-Inspired Job Portal",
   "main": "backend/server.js",
   "scripts": {
-    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "node backend/server.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "server": "npm --prefix backend run dev",
     "client": "npm --prefix frontend start",
     "seed": "npm --prefix backend run seed",
@@ -21,7 +22,7 @@
   ],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
+  "dependencies": {
     "concurrently": "^8.2.2"
   }
 }
