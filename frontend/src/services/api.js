@@ -1,41 +1,63 @@
 import axios from 'axios';
 
+const PRODUCTION_BACKEND_URL = 'https://job-portal-1how-to-deploy.onrender.com';
+const PRODUCTION_API_URL = `${PRODUCTION_BACKEND_URL}/api`;
+
 /**
  * Intelligently resolve the backend API Base URL across development and production deployments.
- * Supports VITE_API_URL, REACT_APP_API_URL, and VITE_BACKEND_URL.
- * Normalizes trailing slashes and ensures the '/api' prefix is present.
+ * Evaluates browser runtime host to guarantee deployed clients connect directly to Render.
  */
 export const resolveBaseUrl = () => {
-  let url =
-    import.meta.env.VITE_API_URL ||
-    import.meta.env.REACT_APP_API_URL ||
-    import.meta.env.VITE_BACKEND_URL;
+  // If running in the browser:
+  if (typeof window !== 'undefined') {
+    const hostname = window.location.hostname;
+    const isLocalhost =
+      hostname === 'localhost' ||
+      hostname === '127.0.0.1' ||
+      hostname === '0.0.0.0' ||
+      hostname.endsWith('.local');
 
-  if (!url || typeof url !== 'string' || !url.trim()) {
-    if (import.meta.env.DEV) {
-      return '/api';
-    }
-    // In production without env variable:
-    if (
-      typeof window !== 'undefined' &&
-      (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-    ) {
+    // On local development machine
+    if (isLocalhost) {
+      const devUrl =
+        import.meta.env.VITE_API_URL ||
+        import.meta.env.REACT_APP_API_URL ||
+        import.meta.env.VITE_BACKEND_URL;
+
+      if (devUrl && typeof devUrl === 'string' && devUrl.trim()) {
+        let clean = devUrl.trim().replace(/\/+$/, '');
+        if (!clean.endsWith('/api')) clean = `${clean}/api`;
+        return clean;
+      }
       return 'http://localhost:5000/api';
     }
 
-    // In production, default directly to your deployed Render backend
-    return 'https://job-portal-1how-to-deploy.onrender.com/api';
+    // On any deployed domain (*.vercel.app, custom domains, etc.):
+    // Any localhost, 127.0.0.1, relative /api, or same-origin URL is invalid in production.
+    const envUrl =
+      import.meta.env.VITE_API_URL ||
+      import.meta.env.REACT_APP_API_URL ||
+      import.meta.env.VITE_BACKEND_URL;
+
+    if (
+      envUrl &&
+      typeof envUrl === 'string' &&
+      envUrl.startsWith('https://') &&
+      !envUrl.includes('localhost') &&
+      !envUrl.includes('127.0.0.1') &&
+      !envUrl.includes(hostname)
+    ) {
+      let clean = envUrl.trim().replace(/\/+$/, '');
+      if (!clean.endsWith('/api')) clean = `${clean}/api`;
+      return clean;
+    }
+
+    // Default directly to your deployed Render backend
+    return PRODUCTION_API_URL;
   }
 
-  // Clean trailing slashes
-  url = url.trim().replace(/\/+$/, '');
-
-  // Ensure '/api' suffix is present without doubling
-  if (!url.endsWith('/api')) {
-    url = `${url}/api`;
-  }
-
-  return url;
+  // Fallback for build-time or SSR
+  return PRODUCTION_API_URL;
 };
 
 export const API_BASE_URL = resolveBaseUrl();
@@ -44,9 +66,31 @@ const API = axios.create({
   baseURL: API_BASE_URL,
 });
 
-// Request interceptor: attach JWT token if available
+// Request interceptor: ensure correct baseURL and attach JWT token
 API.interceptors.request.use(
   (config) => {
+    // Dynamic runtime check: if deployed, ensure request points to production backend
+    if (typeof window !== 'undefined') {
+      const hostname = window.location.hostname;
+      const isLocalhost =
+        hostname === 'localhost' ||
+        hostname === '127.0.0.1' ||
+        hostname === '0.0.0.0' ||
+        hostname.endsWith('.local');
+
+      if (!isLocalhost) {
+        if (
+          !config.baseURL ||
+          config.baseURL === '/api' ||
+          config.baseURL.includes('localhost') ||
+          config.baseURL.includes('127.0.0.1') ||
+          config.baseURL.includes(hostname)
+        ) {
+          config.baseURL = PRODUCTION_API_URL;
+        }
+      }
+    }
+
     const token = localStorage.getItem('jobconnect_token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -69,11 +113,11 @@ API.interceptors.response.use(
       console.error(
         `[JobConnect API Error] Endpoint "${response.config.url}" returned HTML instead of JSON. ` +
         `This occurs when the production frontend calls a relative route that gets intercepted by the SPA static router. ` +
-        `Please ensure VITE_API_URL is configured in your production deployment dashboard.`
+        `Please ensure requests point to the production backend: ${PRODUCTION_API_URL}`
       );
       return Promise.reject(
         new Error(
-          `API endpoint "${response.config.url}" returned HTML instead of JSON. Please verify VITE_API_URL in deployment settings.`
+          `API endpoint "${response.config.url}" returned HTML instead of JSON. Please verify backend connection.`
         )
       );
     }
@@ -97,7 +141,7 @@ API.interceptors.response.use(
 
 /**
  * Helper to resolve media/image URLs (handles relative /uploads/ vs full https:// URLs).
- * Dynamically derives backend origin from API_BASE_URL if VITE_BACKEND_URL is not set.
+ * Dynamically resolves to production Render backend origin on deployed sites.
  */
 export const getMediaUrl = (path) => {
   if (!path) return '';
@@ -105,17 +149,23 @@ export const getMediaUrl = (path) => {
     return path;
   }
 
-  let backendBase = import.meta.env.VITE_BACKEND_URL;
-  if (!backendBase || typeof backendBase !== 'string') {
-    if (API_BASE_URL.startsWith('http://') || API_BASE_URL.startsWith('https://')) {
-      backendBase = API_BASE_URL.replace(/\/api\/?$/, '');
-    } else if (import.meta.env.DEV) {
-      backendBase = 'http://localhost:5000';
+  let backendBase = '';
+  if (typeof window !== 'undefined') {
+    const hostname = window.location.hostname;
+    const isLocalhost =
+      hostname === 'localhost' ||
+      hostname === '127.0.0.1' ||
+      hostname === '0.0.0.0' ||
+      hostname.endsWith('.local');
+
+    if (isLocalhost) {
+      const devBase = import.meta.env.VITE_BACKEND_URL;
+      backendBase = devBase && typeof devBase === 'string' ? devBase.trim().replace(/\/+$/, '') : 'http://localhost:5000';
     } else {
-      backendBase = '';
+      backendBase = PRODUCTION_BACKEND_URL;
     }
   } else {
-    backendBase = backendBase.trim().replace(/\/+$/, '');
+    backendBase = PRODUCTION_BACKEND_URL;
   }
 
   return `${backendBase}${path.startsWith('/') ? '' : '/'}${path}`;
