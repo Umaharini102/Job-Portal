@@ -174,30 +174,30 @@ const JobsPage = () => {
   ].filter(Boolean).length;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       {/* Top Search Banner */}
-      <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-sm">
+      <div className="bg-[#FDFBF7] rounded-3xl p-5 sm:p-6 border border-[#E8DFC9] shadow-sm">
         <form onSubmit={handleApplyFilters} className="grid grid-cols-1 md:grid-cols-12 gap-3">
           <div className="md:col-span-5 relative">
-            <Search className="w-5 h-5 text-slate-400 absolute left-3.5 top-3 pointer-events-none" />
+            <Search className="w-5 h-5 text-charcoal-400 absolute left-3.5 top-3.5 pointer-events-none" />
             <input
               type="text"
               placeholder="Job title, skill (e.g. React, Python, Java)..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-brand-500 focus:ring-2 focus:ring-brand-100 outline-none transition-all"
+              className="w-full pl-10 pr-4 py-3 text-sm bg-white border border-[#DFD3BE] rounded-xl focus:border-brand-500 focus:ring-4 focus:ring-brand-100 outline-none transition-all text-charcoal-900"
             />
           </div>
 
           <div className="md:col-span-4 relative">
-            <Building2 className="w-5 h-5 text-slate-400 absolute left-3.5 top-3 pointer-events-none" />
+            <Building2 className="w-5 h-5 text-charcoal-400 absolute left-3.5 top-3.5 pointer-events-none" />
             <select
               value={company}
               onChange={(e) => {
                 setCompany(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-full pl-10 pr-4 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-brand-500 outline-none"
+              className="w-full pl-10 pr-4 py-3 text-sm bg-white border border-[#DFD3BE] rounded-xl focus:border-brand-500 outline-none text-charcoal-900 font-medium"
             >
               <option value="All">All Companies (Indian & MNCs)</option>
               {availableCompanies.map((c) => (
@@ -211,7 +211,7 @@ const JobsPage = () => {
           <div className="md:col-span-3 flex items-center gap-2">
             <button
               type="submit"
-              className="flex-1 py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm rounded-xl shadow-sm transition-colors flex items-center justify-center gap-2"
+              className="flex-1 py-3 bg-brand-600 hover:bg-brand-500 text-white font-bold text-sm rounded-xl shadow-md shadow-brand-600/20 transition-all flex items-center justify-center gap-2 hover:scale-[1.02]"
             >
               <Search className="w-4 h-4" />
               <span>Search Jobs</span>
@@ -220,7 +220,7 @@ const JobsPage = () => {
             <button
               type="button"
               onClick={() => setMobileFilterOpen(!mobileFilterOpen)}
-              className="lg:hidden p-2.5 border border-slate-200 rounded-xl hover:bg-slate-100 text-slate-600"
+              className="lg:hidden p-3 border border-[#DFD3BE] rounded-xl hover:bg-white text-charcoal-700"
             >
               <SlidersHorizontal className="w-5 h-5" />
             </button>
@@ -232,15 +232,15 @@ const JobsPage = () => {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
         {/* Left Filter Sidebar */}
         <div
-          className={`lg:block bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-6 ${
+          className={`lg:block bg-[#FDFBF7] rounded-3xl p-6 border border-[#E8DFC9] shadow-sm space-y-6 ${
             mobileFilterOpen
-              ? 'fixed inset-4 z-50 overflow-y-auto bg-white shadow-2xl'
+              ? 'fixed inset-4 z-50 overflow-y-auto bg-[#FDFBF7] shadow-2xl'
               : 'hidden'
           }`}
         >
-          <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-            <h3 className="font-bold text-slate-900 text-base flex items-center gap-2">
-              <Filter className="w-4 h-4 text-brand-600" />
+          <div className="flex items-center justify-between pb-3 border-b border-[#E8DFC9]">
+            <h3 className="font-extrabold text-charcoal-900 text-base flex items-center gap-2">
+              <Filter className="w-4 h-4 text-brand-500" />
               <span>Job Filters</span>
             </h3>
             <div className="flex items-center gap-2">
@@ -404,22 +404,22 @@ const JobsPage = () => {
         </div>
 
         {/* Right Job Cards Grid */}
-        <div className="lg:col-span-3 space-y-4">
+        <div className="lg:col-span-3 space-y-5">
           {/* Header Bar with Sort */}
-          <div className="flex items-center justify-between bg-white p-3.5 px-5 rounded-2xl border border-slate-200 shadow-sm text-sm">
-            <span className="font-bold text-slate-700">
-              {totalJobs} {totalJobs === 1 ? 'Job' : 'Jobs'} Found
+          <div className="flex items-center justify-between bg-[#FDFBF7] p-4 px-6 rounded-2xl border border-[#E8DFC9] shadow-sm text-sm">
+            <span className="font-extrabold text-charcoal-900">
+              {totalJobs} {totalJobs === 1 ? 'Opportunity' : 'Opportunities'} Found
             </span>
 
             <div className="flex items-center gap-2">
-              <span className="text-xs text-slate-500 font-medium hidden sm:inline">Sort:</span>
+              <span className="text-xs text-charcoal-500 font-semibold hidden sm:inline">Sort by:</span>
               <select
                 value={sort}
                 onChange={(e) => {
                   setSort(e.target.value);
                   setCurrentPage(1);
                 }}
-                className="text-xs bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 focus:bg-white focus:border-brand-500 outline-none font-semibold text-slate-700"
+                className="text-xs bg-white border border-[#DFD3BE] rounded-xl px-3 py-1.5 focus:border-brand-500 outline-none font-bold text-charcoal-800"
               >
                 <option value="latest">Latest Posted</option>
                 <option value="oldest">Oldest Posted</option>
@@ -433,41 +433,46 @@ const JobsPage = () => {
           {loading ? (
             <div className="space-y-4">
               {[1, 2, 3, 4].map((n) => (
-                <div key={n} className="h-44 bg-white rounded-2xl border border-slate-200 animate-pulse p-6"></div>
+                <div key={n} className="h-44 bg-[#FDFBF7] rounded-2xl border border-[#E8DFC9] animate-pulse p-6"></div>
               ))}
             </div>
           ) : jobs.length === 0 ? (
-            <div className="bg-white rounded-2xl p-12 text-center border border-slate-200 space-y-3">
-              <Briefcase className="w-12 h-12 text-slate-300 mx-auto" />
-              <h3 className="font-bold text-slate-800 text-base">No matching jobs found</h3>
-              <p className="text-xs text-slate-500 max-w-sm mx-auto">
+            <div className="bg-[#FDFBF7] rounded-3xl p-14 text-center border border-[#E8DFC9] space-y-4">
+              <Briefcase className="w-12 h-12 text-charcoal-400 mx-auto" />
+              <h3 className="font-extrabold text-charcoal-900 text-lg">No matching jobs found</h3>
+              <p className="text-xs text-charcoal-500 max-w-sm mx-auto leading-relaxed">
                 Try widening your location or search terms, or resetting your company filters.
               </p>
               <button
                 type="button"
                 onClick={handleResetFilters}
-                className="mt-2 px-4 py-2 bg-brand-600 text-white font-bold text-xs rounded-xl shadow-sm hover:bg-brand-700 transition-colors"
+                className="mt-2 px-5 py-2.5 bg-brand-600 text-white font-bold text-xs rounded-xl shadow-md hover:bg-brand-500 transition-all"
               >
                 Clear All Filters
               </button>
             </div>
           ) : (
             <div className="space-y-4">
-              {jobs.map((job) => (
-                <JobCard
-                  key={job._id}
-                  job={job}
-                  isSaved={job.isSaved}
-                  hasApplied={job.hasApplied}
-                  onToggleSave={handleToggleSave}
-                />
-              ))}
+              {jobs.map((job, idx) => {
+                const variants = ['cream', 'beige', 'lavender'];
+                const cardVariant = variants[idx % variants.length];
+                return (
+                  <JobCard
+                    key={job._id || idx}
+                    job={job}
+                    bgVariant={cardVariant}
+                    isSaved={job.isSaved}
+                    hasApplied={job.hasApplied}
+                    onToggleSave={handleToggleSave}
+                  />
+                );
+              })}
             </div>
           )}
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="pt-4 flex justify-center">
+            <div className="pt-6 flex justify-center">
               <Pagination
                 currentPage={currentPage}
                 totalPages={totalPages}

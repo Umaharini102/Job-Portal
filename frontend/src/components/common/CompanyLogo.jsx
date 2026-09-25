@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import { getMediaUrl } from '../../services/api';
 
-// Curated modern gradient palettes for initials badges
+// Curated warm & monochrome modern gradient palettes for initials badges (NO BLUE)
 const GRADIENT_PALETTES = [
-  'from-blue-600 to-indigo-700 text-white',
-  'from-indigo-600 to-violet-700 text-white',
-  'from-sky-500 to-blue-600 text-white',
-  'from-emerald-600 to-teal-700 text-white',
-  'from-teal-600 to-cyan-700 text-white',
-  'from-purple-600 to-fuchsia-700 text-white',
-  'from-rose-600 to-pink-700 text-white',
-  'from-amber-600 to-orange-700 text-white',
-  'from-slate-700 to-slate-900 text-white',
-  'from-cyan-600 to-blue-700 text-white',
+  'from-charcoal-900 to-charcoal-800 text-white',
+  'from-brand-600 to-brand-700 text-white',
+  'from-charcoal-800 to-charcoal-900 text-brand-400',
+  'from-lavender-700 to-charcoal-900 text-white',
+  'from-coral-600 to-charcoal-900 text-white',
+  'from-charcoal-900 to-brand-900 text-cream-100',
+  'from-amber-700 to-charcoal-900 text-white',
+  'from-charcoal-700 to-charcoal-850 text-cream-200',
+  'from-brand-700 to-charcoal-900 text-white',
+  'from-charcoal-800 to-lavender-900 text-cream-100',
 ];
 
 // Generate consistent initials from company name (e.g. TCS, Infosys -> INF, Microsoft -> MSFT)

@@ -50,36 +50,37 @@ export default function JobPortalBackground({ className = '' }) {
       t += 0.01;
       ctx.clearRect(0, 0, width, height);
 
-      // Deep Navy & Indigo Gradient Background
+      // Deep Charcoal & Warm Black Background (NO BLUE)
       const bgGrad = ctx.createLinearGradient(0, 0, width, height);
-      bgGrad.addColorStop(0, '#0a1128');
-      bgGrad.addColorStop(0.35, '#0f172a');
-      bgGrad.addColorStop(0.7, '#070d1e');
-      bgGrad.addColorStop(1, '#050a17');
+      bgGrad.addColorStop(0, '#0C0D10');
+      bgGrad.addColorStop(0.35, '#121318');
+      bgGrad.addColorStop(0.7, '#16171E');
+      bgGrad.addColorStop(1, '#0A0B0E');
       ctx.fillStyle = bgGrad;
       ctx.fillRect(0, 0, width, height);
 
-      // Soft moving ambient radial light glow
+      // Soft moving ambient radial light glow: Burnt Orange
       const cx1 = width * 0.25 + Math.sin(t * 0.7) * 80;
       const cy1 = height * 0.3 + Math.cos(t * 0.5) * 60;
       const glow1 = ctx.createRadialGradient(cx1, cy1, 10, cx1, cy1, width * 0.45);
-      glow1.addColorStop(0, 'rgba(10, 102, 194, 0.16)');
-      glow1.addColorStop(0.5, 'rgba(99, 102, 241, 0.06)');
+      glow1.addColorStop(0, 'rgba(255, 92, 40, 0.08)');
+      glow1.addColorStop(0.5, 'rgba(255, 107, 107, 0.03)');
       glow1.addColorStop(1, 'transparent');
       ctx.fillStyle = glow1;
       ctx.fillRect(0, 0, width, height);
 
+      // Soft moving ambient radial light glow: Soft Lavender/Purple
       const cx2 = width * 0.75 + Math.cos(t * 0.6) * 90;
       const cy2 = height * 0.45 + Math.sin(t * 0.8) * 70;
       const glow2 = ctx.createRadialGradient(cx2, cy2, 10, cx2, cy2, width * 0.4);
-      glow2.addColorStop(0, 'rgba(139, 92, 246, 0.14)');
-      glow2.addColorStop(0.6, 'rgba(56, 189, 248, 0.04)');
+      glow2.addColorStop(0, 'rgba(167, 139, 250, 0.07)');
+      glow2.addColorStop(0.6, 'rgba(255, 92, 40, 0.02)');
       glow2.addColorStop(1, 'transparent');
       ctx.fillStyle = glow2;
       ctx.fillRect(0, 0, width, height);
 
-      // Very subtle grid lines
-      ctx.strokeStyle = 'rgba(56, 189, 248, 0.035)';
+      // Very subtle warm grid lines
+      ctx.strokeStyle = 'rgba(255, 92, 40, 0.025)';
       ctx.lineWidth = 1;
       const gridSize = 64;
       for (let x = 0; x <= width; x += gridSize) {
@@ -106,13 +107,13 @@ export default function JobPortalBackground({ className = '' }) {
         if (node.y > height) node.y = 0;
 
         const alpha = node.baseAlpha + Math.sin(t * 2 + node.phase) * 0.15;
-        ctx.fillStyle = `rgba(56, 189, 248, ${Math.max(0.1, alpha)})`;
+        ctx.fillStyle = `rgba(255, 122, 61, ${Math.max(0.1, alpha * 0.7)})`;
         ctx.beginPath();
         ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
         ctx.fill();
       });
 
-      // Draw subtle connecting proximity lines between career nodes
+      // Draw subtle connecting proximity lines between career nodes (Warm Orange / Coral)
       ctx.lineWidth = 0.75;
       for (let i = 0; i < nodes.length; i++) {
         for (let j = i + 1; j < nodes.length; j++) {
@@ -120,8 +121,8 @@ export default function JobPortalBackground({ className = '' }) {
           const dy = nodes[i].y - nodes[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < 130) {
-            const lineAlpha = (1 - dist / 130) * 0.14;
-            ctx.strokeStyle = `rgba(96, 165, 250, ${lineAlpha})`;
+            const lineAlpha = (1 - dist / 130) * 0.12;
+            ctx.strokeStyle = `rgba(255, 140, 80, ${lineAlpha})`;
             ctx.beginPath();
             ctx.moveTo(nodes[i].x, nodes[i].y);
             ctx.lineTo(nodes[j].x, nodes[j].y);
@@ -130,13 +131,13 @@ export default function JobPortalBackground({ className = '' }) {
         }
       }
 
-      // Floating Geometric Wireframes
+      // Floating Geometric Wireframes (Soft Purple / Warm Gold)
       shapes.forEach((s) => {
         s.rot += s.rotSpeed;
         ctx.save();
         ctx.translate(s.x, s.y);
         ctx.rotate(s.rot);
-        ctx.strokeStyle = 'rgba(129, 140, 248, 0.18)';
+        ctx.strokeStyle = 'rgba(167, 139, 250, 0.14)';
         ctx.lineWidth = 1.2;
 
         if (s.type === 'diamond') {

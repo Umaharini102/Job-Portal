@@ -82,32 +82,41 @@ const Navbar = () => {
   return (
     <header className={`sticky top-0 z-40 transition-all duration-300 ${
       scrolled
-        ? 'bg-white/95 backdrop-blur-md border-b border-slate-200/90 shadow-sm'
-        : 'bg-white/85 backdrop-blur-sm border-b border-slate-200/60'
+        ? 'bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[#E8DFC9] shadow-sm'
+        : 'bg-[#FAF7F2]/85 backdrop-blur-sm border-b border-[#ECE2D0]'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 gap-4">
           {/* Brand Logo & Search */}
-          <div className="flex items-center gap-4 flex-1 max-w-md">
-            <Link to={user ? (user.role === 'Admin' ? '/admin/dashboard' : user.role === 'Recruiter' ? '/recruiter/dashboard' : '/home') : '/'} className="flex items-center gap-2.5 flex-shrink-0 group">
-              <div className="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center text-white font-bold text-xl shadow-md group-hover:bg-brand-700 transition-colors">
-                <Briefcase className="w-5 h-5" />
+          <div className="flex items-center gap-3 flex-1 max-w-lg">
+            <Link
+              to={user ? (user.role === 'Admin' ? '/admin/dashboard' : user.role === 'Recruiter' ? '/recruiter/dashboard' : '/home') : '/'}
+              className="flex items-center gap-2.5 flex-shrink-0 group"
+              title="Career Simulation Engine"
+            >
+              <div className="w-10 h-10 rounded-xl bg-charcoal-900 border border-charcoal-700 flex items-center justify-center text-white font-black text-sm tracking-wider shadow-md group-hover:border-brand-500 transition-colors">
+                <span className="text-brand-500">CS</span>E
               </div>
-              <span className="font-extrabold text-xl tracking-tight text-slate-900 hidden sm:inline-block">
-                Job<span className="text-brand-600">Connect</span>
-              </span>
+              <div className="flex flex-col">
+                <span className="font-extrabold text-sm sm:text-base tracking-tight text-charcoal-950 leading-tight">
+                  Career Simulation Engine
+                </span>
+                <span className="text-[10px] font-mono tracking-wider text-charcoal-500 font-semibold hidden lg:block">
+                  Next-Gen Career Platform
+                </span>
+              </div>
             </Link>
 
             {/* Global Search bar */}
-            <form onSubmit={handleSearch} className="relative w-full hidden md:block">
+            <form onSubmit={handleSearch} className="relative w-full hidden xl:block max-w-xs ml-2">
               <input
                 type="text"
                 placeholder="Search jobs, skills, companies..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 text-sm bg-slate-100 border border-transparent rounded-full focus:bg-white focus:border-brand-500 focus:ring-2 focus:ring-brand-100 outline-none transition-all placeholder:text-slate-400"
+                className="w-full pl-9 pr-4 py-1.5 text-xs bg-white/90 border border-[#E2D6C0] rounded-full focus:bg-white focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition-all placeholder:text-charcoal-400 text-charcoal-900"
               />
-              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5 pointer-events-none" />
+              <Search className="w-3.5 h-3.5 text-charcoal-400 absolute left-3 top-2.5 pointer-events-none" />
             </form>
           </div>
 
@@ -119,7 +128,7 @@ const Navbar = () => {
                 <Link
                   to="/"
                   className={`px-3 py-2 text-sm font-semibold rounded-lg transition-colors ${
-                    isActive('/') ? 'text-brand-600 bg-brand-50' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                    isActive('/') ? 'text-brand-600 bg-brand-50/80 font-bold' : 'text-charcoal-700 hover:text-charcoal-950 hover:bg-[#F3EFE6]'
                   }`}
                 >
                   Home
@@ -127,7 +136,7 @@ const Navbar = () => {
                 <Link
                   to="/jobs"
                   className={`px-3 py-2 text-sm font-semibold rounded-lg transition-colors ${
-                    isActive('/jobs') ? 'text-brand-600 bg-brand-50' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                    isActive('/jobs') ? 'text-brand-600 bg-brand-50/80 font-bold' : 'text-charcoal-700 hover:text-charcoal-950 hover:bg-[#F3EFE6]'
                   }`}
                 >
                   Jobs
@@ -135,33 +144,40 @@ const Navbar = () => {
                 <Link
                   to="/companies"
                   className={`px-3 py-2 text-sm font-semibold rounded-lg transition-colors ${
-                    isActive('/companies') ? 'text-brand-600 bg-brand-50' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                    isActive('/companies') ? 'text-brand-600 bg-brand-50/80 font-bold' : 'text-charcoal-700 hover:text-charcoal-950 hover:bg-[#F3EFE6]'
                   }`}
                 >
                   Companies
                 </Link>
+                <a
+                  href="/#career-simulation"
+                  className="px-3 py-2 text-sm font-semibold text-charcoal-700 hover:text-charcoal-950 hover:bg-[#F3EFE6] rounded-lg transition-colors flex items-center gap-1.5"
+                >
+                  <span>Career</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-brand-500" />
+                </a>
                 <Link
                   to="/login"
-                  className="px-3 py-2 text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
+                  className="px-3 py-2 text-sm font-semibold text-charcoal-700 hover:text-charcoal-950 hover:bg-[#F3EFE6] rounded-lg transition-colors"
                 >
                   Applications
                 </Link>
                 <Link
                   to="/login"
-                  className="px-3 py-2 text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
+                  className="px-3 py-2 text-sm font-semibold text-charcoal-700 hover:text-charcoal-950 hover:bg-[#F3EFE6] rounded-lg transition-colors"
                 >
                   Profile
                 </Link>
-                <div className="h-6 w-px bg-slate-200 mx-1.5" />
+                <div className="h-5 w-px bg-[#E2D6C0] mx-1.5" />
                 <Link
                   to="/login"
-                  className="px-4 py-2 text-sm font-semibold text-brand-600 hover:text-brand-700 hover:bg-brand-50 rounded-lg transition-colors"
+                  className="px-4 py-2 text-sm font-semibold text-charcoal-900 hover:text-brand-600 hover:bg-[#F3EFE6] rounded-lg transition-colors"
                 >
                   Login
                 </Link>
                 <Link
                   to="/register"
-                  className="px-4 py-2 text-sm font-semibold text-white bg-brand-600 hover:bg-brand-700 rounded-lg shadow-sm hover:shadow transition-all"
+                  className="px-4 py-2 text-sm font-bold text-white bg-brand-600 hover:bg-brand-500 rounded-xl shadow-md shadow-brand-600/20 transition-all hover:scale-[1.02]"
                 >
                   Get Started
                 </Link>
@@ -174,58 +190,65 @@ const Navbar = () => {
                 <Link
                   to="/home"
                   className={`flex flex-col items-center px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors ${
-                    isActive('/home') ? 'text-brand-600' : 'text-slate-600 hover:text-slate-900'
+                    isActive('/home') ? 'text-brand-600 font-bold' : 'text-charcoal-700 hover:text-charcoal-950 hover:bg-[#F3EFE6]'
                   }`}
                 >
-                  <Home className="w-5 h-5 mb-0.5" />
+                  <Home className="w-4 h-4 mb-0.5" />
                   <span>Feed</span>
                 </Link>
                 <Link
                   to="/jobs"
                   className={`flex flex-col items-center px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors ${
-                    isActive('/jobs') ? 'text-brand-600' : 'text-slate-600 hover:text-slate-900'
+                    isActive('/jobs') ? 'text-brand-600 font-bold' : 'text-charcoal-700 hover:text-charcoal-950 hover:bg-[#F3EFE6]'
                   }`}
                 >
-                  <Briefcase className="w-5 h-5 mb-0.5" />
+                  <Briefcase className="w-4 h-4 mb-0.5" />
                   <span>Jobs</span>
                 </Link>
                 <Link
                   to="/companies"
                   className={`flex flex-col items-center px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors ${
-                    isActive('/companies') ? 'text-brand-600' : 'text-slate-600 hover:text-slate-900'
+                    isActive('/companies') ? 'text-brand-600 font-bold' : 'text-charcoal-700 hover:text-charcoal-950 hover:bg-[#F3EFE6]'
                   }`}
                 >
-                  <Building className="w-5 h-5 mb-0.5" />
+                  <Building className="w-4 h-4 mb-0.5" />
                   <span>Companies</span>
                 </Link>
+                <a
+                  href="/#career-simulation"
+                  className="flex flex-col items-center px-3 py-1.5 text-xs font-semibold text-charcoal-700 hover:text-charcoal-950 hover:bg-[#F3EFE6] rounded-lg transition-colors"
+                >
+                  <span className="w-4 h-4 flex items-center justify-center font-bold text-brand-500">✦</span>
+                  <span>Career</span>
+                </a>
                 <Link
                   to="/applications"
                   className={`flex flex-col items-center px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors ${
-                    isActive('/applications') ? 'text-brand-600' : 'text-slate-600 hover:text-slate-900'
+                    isActive('/applications') ? 'text-brand-600 font-bold' : 'text-charcoal-700 hover:text-charcoal-950 hover:bg-[#F3EFE6]'
                   }`}
                 >
-                  <FileText className="w-5 h-5 mb-0.5" />
-                  <span>Applied</span>
+                  <FileText className="w-4 h-4 mb-0.5" />
+                  <span>Applications</span>
                 </Link>
                 <Link
                   to="/saved-jobs"
                   className={`flex flex-col items-center px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors ${
-                    isActive('/saved-jobs') ? 'text-brand-600' : 'text-slate-600 hover:text-slate-900'
+                    isActive('/saved-jobs') ? 'text-brand-600 font-bold' : 'text-charcoal-700 hover:text-charcoal-950 hover:bg-[#F3EFE6]'
                   }`}
                 >
-                  <Bookmark className="w-5 h-5 mb-0.5" />
+                  <Bookmark className="w-4 h-4 mb-0.5" />
                   <span>Saved</span>
                 </Link>
                 <Link
                   to="/notifications"
                   className={`relative flex flex-col items-center px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors ${
-                    isActive('/notifications') ? 'text-brand-600' : 'text-slate-600 hover:text-slate-900'
+                    isActive('/notifications') ? 'text-brand-600 font-bold' : 'text-charcoal-700 hover:text-charcoal-950 hover:bg-[#F3EFE6]'
                   }`}
                 >
-                  <Bell className="w-5 h-5 mb-0.5" />
-                  <span>Notifications</span>
+                  <Bell className="w-4 h-4 mb-0.5" />
+                  <span>Alerts</span>
                   {unreadCount > 0 && (
-                    <span className="absolute top-1 right-2.5 w-4 h-4 bg-rose-500 text-white rounded-full text-[10px] font-bold flex items-center justify-center animate-pulse">
+                    <span className="absolute top-1 right-2.5 w-4 h-4 bg-coral-500 text-white rounded-full text-[10px] font-bold flex items-center justify-center">
                       {unreadCount > 9 ? '9+' : unreadCount}
                     </span>
                   )}
@@ -239,7 +262,7 @@ const Navbar = () => {
                 <Link
                   to="/recruiter/dashboard"
                   className={`flex items-center gap-1.5 px-3 py-2 text-sm font-semibold rounded-lg transition-colors ${
-                    isActive('/recruiter/dashboard') ? 'text-brand-600 bg-brand-50' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                    isActive('/recruiter/dashboard') ? 'text-brand-600 bg-brand-50/80 font-bold' : 'text-charcoal-700 hover:text-charcoal-950 hover:bg-[#F3EFE6]'
                   }`}
                 >
                   <BarChart3 className="w-4 h-4" />
@@ -248,7 +271,7 @@ const Navbar = () => {
                 <Link
                   to="/recruiter/jobs"
                   className={`flex items-center gap-1.5 px-3 py-2 text-sm font-semibold rounded-lg transition-colors ${
-                    isActive('/recruiter/jobs') ? 'text-brand-600 bg-brand-50' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                    isActive('/recruiter/jobs') ? 'text-brand-600 bg-brand-50/80 font-bold' : 'text-charcoal-700 hover:text-charcoal-950 hover:bg-[#F3EFE6]'
                   }`}
                 >
                   <Briefcase className="w-4 h-4" />
@@ -257,7 +280,7 @@ const Navbar = () => {
                 <Link
                   to="/recruiter/applicants"
                   className={`flex items-center gap-1.5 px-3 py-2 text-sm font-semibold rounded-lg transition-colors ${
-                    isActive('/recruiter/applicants') ? 'text-brand-600 bg-brand-50' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                    isActive('/recruiter/applicants') ? 'text-brand-600 bg-brand-50/80 font-bold' : 'text-charcoal-700 hover:text-charcoal-950 hover:bg-[#F3EFE6]'
                   }`}
                 >
                   <Users className="w-4 h-4" />
@@ -266,7 +289,7 @@ const Navbar = () => {
                 <Link
                   to="/companies"
                   className={`flex items-center gap-1.5 px-3 py-2 text-sm font-semibold rounded-lg transition-colors ${
-                    isActive('/companies') ? 'text-brand-600 bg-brand-50' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                    isActive('/companies') ? 'text-brand-600 bg-brand-50/80 font-bold' : 'text-charcoal-700 hover:text-charcoal-950 hover:bg-[#F3EFE6]'
                   }`}
                 >
                   <Building className="w-4 h-4" />
@@ -274,7 +297,7 @@ const Navbar = () => {
                 </Link>
                 <Link
                   to="/recruiter/post-job"
-                  className="flex items-center gap-1.5 px-3.5 py-2 text-sm font-semibold text-white bg-brand-600 hover:bg-brand-700 rounded-lg shadow-sm transition-all ml-1"
+                  className="flex items-center gap-1.5 px-3.5 py-2 text-sm font-bold text-white bg-brand-600 hover:bg-brand-500 rounded-xl shadow-md shadow-brand-600/20 transition-all ml-1"
                 >
                   <PlusCircle className="w-4 h-4" />
                   <span>Post Job</span>
@@ -288,7 +311,7 @@ const Navbar = () => {
                 <Link
                   to="/admin/dashboard"
                   className={`flex items-center gap-1.5 px-2.5 py-2 text-xs font-semibold rounded-lg transition-colors ${
-                    isActive('/admin/dashboard') ? 'text-brand-600 bg-brand-50' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                    isActive('/admin/dashboard') ? 'text-brand-600 bg-brand-50/80 font-bold' : 'text-charcoal-700 hover:text-charcoal-950 hover:bg-[#F3EFE6]'
                   }`}
                 >
                   <BarChart3 className="w-3.5 h-3.5" />
@@ -297,7 +320,7 @@ const Navbar = () => {
                 <Link
                   to="/admin/users"
                   className={`flex items-center gap-1.5 px-2.5 py-2 text-xs font-semibold rounded-lg transition-colors ${
-                    isActive('/admin/users') ? 'text-brand-600 bg-brand-50' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                    isActive('/admin/users') ? 'text-brand-600 bg-brand-50/80 font-bold' : 'text-charcoal-700 hover:text-charcoal-950 hover:bg-[#F3EFE6]'
                   }`}
                 >
                   <Users className="w-3.5 h-3.5" />
@@ -306,7 +329,7 @@ const Navbar = () => {
                 <Link
                   to="/admin/recruiters"
                   className={`flex items-center gap-1.5 px-2.5 py-2 text-xs font-semibold rounded-lg transition-colors ${
-                    isActive('/admin/recruiters') ? 'text-brand-600 bg-brand-50' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                    isActive('/admin/recruiters') ? 'text-brand-600 bg-brand-50/80 font-bold' : 'text-charcoal-700 hover:text-charcoal-950 hover:bg-[#F3EFE6]'
                   }`}
                 >
                   <Building className="w-3.5 h-3.5" />
@@ -315,7 +338,7 @@ const Navbar = () => {
                 <Link
                   to="/admin/jobs"
                   className={`flex items-center gap-1.5 px-2.5 py-2 text-xs font-semibold rounded-lg transition-colors ${
-                    isActive('/admin/jobs') ? 'text-brand-600 bg-brand-50' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                    isActive('/admin/jobs') ? 'text-brand-600 bg-brand-50/80 font-bold' : 'text-charcoal-700 hover:text-charcoal-950 hover:bg-[#F3EFE6]'
                   }`}
                 >
                   <Briefcase className="w-3.5 h-3.5" />
@@ -324,7 +347,7 @@ const Navbar = () => {
                 <Link
                   to="/admin/companies"
                   className={`flex items-center gap-1.5 px-2.5 py-2 text-xs font-semibold rounded-lg transition-colors ${
-                    isActive('/admin/companies') ? 'text-brand-600 bg-brand-50' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                    isActive('/admin/companies') ? 'text-brand-600 bg-brand-50/80 font-bold' : 'text-charcoal-700 hover:text-charcoal-950 hover:bg-[#F3EFE6]'
                   }`}
                 >
                   <Building className="w-3.5 h-3.5" />
@@ -333,7 +356,7 @@ const Navbar = () => {
                 <Link
                   to="/admin/applications"
                   className={`flex items-center gap-1.5 px-2.5 py-2 text-xs font-semibold rounded-lg transition-colors ${
-                    isActive('/admin/applications') ? 'text-brand-600 bg-brand-50' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                    isActive('/admin/applications') ? 'text-brand-600 bg-brand-50/80 font-bold' : 'text-charcoal-700 hover:text-charcoal-950 hover:bg-[#F3EFE6]'
                   }`}
                 >
                   <FileText className="w-3.5 h-3.5" />
@@ -342,7 +365,7 @@ const Navbar = () => {
                 <Link
                   to="/admin/reports"
                   className={`flex items-center gap-1.5 px-2.5 py-2 text-xs font-semibold rounded-lg transition-colors ${
-                    isActive('/admin/reports') ? 'text-brand-600 bg-brand-50' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                    isActive('/admin/reports') ? 'text-brand-600 bg-brand-50/80 font-bold' : 'text-charcoal-700 hover:text-charcoal-950 hover:bg-[#F3EFE6]'
                   }`}
                 >
                   <Flag className="w-3.5 h-3.5" />
@@ -351,7 +374,7 @@ const Navbar = () => {
                 <Link
                   to="/admin/analytics"
                   className={`flex items-center gap-1.5 px-2.5 py-2 text-xs font-semibold rounded-lg transition-colors ${
-                    isActive('/admin/analytics') ? 'text-brand-600 bg-brand-50' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                    isActive('/admin/analytics') ? 'text-brand-600 bg-brand-50/80 font-bold' : 'text-charcoal-700 hover:text-charcoal-950 hover:bg-[#F3EFE6]'
                   }`}
                 >
                   <BarChart3 className="w-3.5 h-3.5" />
@@ -362,12 +385,12 @@ const Navbar = () => {
 
             {/* Profile Dropdown (If Logged In) */}
             {user && (
-              <div className="relative ml-2 pl-2 border-l border-slate-200">
+              <div className="relative ml-2 pl-2 border-l border-[#E2D6C0]">
                 <button
                   onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                  className="flex items-center gap-2 p-1 rounded-full hover:bg-slate-100 transition-colors focus:outline-none"
+                  className="flex items-center gap-2 p-1 rounded-full hover:bg-[#F3EFE6] transition-colors focus:outline-none"
                 >
-                  <div className="w-9 h-9 rounded-full overflow-hidden bg-slate-200 flex-shrink-0 border border-slate-300">
+                  <div className="w-9 h-9 rounded-full overflow-hidden bg-[#EAE2D2] flex-shrink-0 border border-[#D5C7AF]">
                     {user.profileImage ? (
                       <img
                         src={getMediaUrl(user.profileImage)}
@@ -375,20 +398,20 @@ const Navbar = () => {
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center font-bold text-slate-600 bg-brand-100 text-brand-700">
+                      <div className="w-full h-full flex items-center justify-center font-bold text-brand-700 bg-brand-100">
                         {user.name.charAt(0).toUpperCase()}
                       </div>
                     )}
                   </div>
-                  <ChevronDown className="w-3.5 h-3.5 text-slate-500" />
+                  <ChevronDown className="w-3.5 h-3.5 text-charcoal-500" />
                 </button>
 
                 {userDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-slate-100 py-1.5 z-50 animate-in fade-in zoom-in-95">
-                    <div className="px-4 py-2.5 border-b border-slate-100">
-                      <p className="text-sm font-bold text-slate-900 truncate">{user.name}</p>
-                      <p className="text-xs text-slate-500 truncate">{user.email}</p>
-                      <span className="inline-block mt-1 px-2 py-0.5 text-[10px] font-semibold bg-brand-50 text-brand-700 rounded-full border border-brand-200">
+                  <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-[#E8DFC9] py-2 z-50 animate-in fade-in zoom-in-95">
+                    <div className="px-4 py-2.5 border-b border-[#F0E8D8]">
+                      <p className="text-sm font-bold text-charcoal-900 truncate">{user.name}</p>
+                      <p className="text-xs text-charcoal-500 truncate">{user.email}</p>
+                      <span className="inline-block mt-1 px-2.5 py-0.5 text-[10px] font-bold bg-brand-50 text-brand-700 rounded-full border border-brand-200">
                         {user.role}
                       </span>
                     </div>
@@ -397,16 +420,16 @@ const Navbar = () => {
                       <>
                         <Link
                           to="/profile"
-                          className="flex items-center gap-2.5 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition-colors"
+                          className="flex items-center gap-2.5 px-4 py-2 text-sm text-charcoal-700 hover:bg-[#FAF7F2] hover:text-brand-600 transition-colors"
                         >
-                          <User className="w-4 h-4 text-slate-400" />
+                          <User className="w-4 h-4 text-charcoal-400" />
                           <span>View Profile</span>
                         </Link>
                         <Link
                           to="/profile/edit"
-                          className="flex items-center gap-2.5 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition-colors"
+                          className="flex items-center gap-2.5 px-4 py-2 text-sm text-charcoal-700 hover:bg-[#FAF7F2] hover:text-brand-600 transition-colors"
                         >
-                          <Settings className="w-4 h-4 text-slate-400" />
+                          <Settings className="w-4 h-4 text-charcoal-400" />
                           <span>Edit Profile</span>
                         </Link>
                       </>
@@ -415,26 +438,26 @@ const Navbar = () => {
                     {user.role === 'Recruiter' && (
                       <Link
                         to="/recruiter/profile"
-                        className="flex items-center gap-2.5 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition-colors"
+                        className="flex items-center gap-2.5 px-4 py-2 text-sm text-charcoal-700 hover:bg-[#FAF7F2] hover:text-brand-600 transition-colors"
                       >
-                        <Building className="w-4 h-4 text-slate-400" />
+                        <Building className="w-4 h-4 text-charcoal-400" />
                         <span>Company Profile</span>
                       </Link>
                     )}
 
                     <Link
                       to="/settings"
-                      className="flex items-center gap-2.5 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition-colors"
+                      className="flex items-center gap-2.5 px-4 py-2 text-sm text-charcoal-700 hover:bg-[#FAF7F2] hover:text-brand-600 transition-colors"
                     >
-                      <Settings className="w-4 h-4 text-slate-400" />
+                      <Settings className="w-4 h-4 text-charcoal-400" />
                       <span>Account Settings</span>
                     </Link>
 
-                    <div className="border-t border-slate-100 my-1" />
+                    <div className="border-t border-[#F0E8D8] my-1" />
 
                     <button
                       onClick={logout}
-                      className="w-full flex items-center gap-2.5 px-4 py-2 text-sm text-rose-600 hover:bg-rose-50 transition-colors text-left"
+                      className="w-full flex items-center gap-2.5 px-4 py-2 text-sm text-coral-600 hover:bg-coral-50 transition-colors text-left font-medium"
                     >
                       <LogOut className="w-4 h-4" />
                       <span>Sign Out</span>
@@ -448,10 +471,10 @@ const Navbar = () => {
           {/* Mobile menu trigger */}
           <div className="flex items-center gap-2 lg:hidden">
             {user && (
-              <Link to="/notifications" className="relative p-2 text-slate-600">
+              <Link to="/notifications" className="relative p-2 text-charcoal-700">
                 <Bell className="w-6 h-6" />
                 {unreadCount > 0 && (
-                  <span className="absolute top-1.5 right-1.5 w-4 h-4 bg-rose-500 text-white rounded-full text-[10px] font-bold flex items-center justify-center">
+                  <span className="absolute top-1.5 right-1.5 w-4 h-4 bg-coral-500 text-white rounded-full text-[10px] font-bold flex items-center justify-center">
                     {unreadCount}
                   </span>
                 )}
@@ -459,7 +482,7 @@ const Navbar = () => {
             )}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-100"
+              className="p-2 text-charcoal-800 hover:text-charcoal-950 rounded-xl hover:bg-[#F3EFE6]"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -468,79 +491,83 @@ const Navbar = () => {
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-slate-200 py-3 space-y-1">
+          <div className="lg:hidden border-t border-[#E8DFC9] py-3 space-y-1 bg-[#FAF7F2]">
             {/* Mobile search */}
             <form onSubmit={handleSearch} className="px-2 pb-2">
               <input
                 type="text"
-                placeholder="Search jobs..."
+                placeholder="Search jobs, companies..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-4 py-2 text-sm bg-slate-100 border border-slate-200 rounded-lg outline-none"
+                className="w-full px-4 py-2 text-sm bg-white border border-[#E2D6C0] rounded-xl outline-none text-charcoal-900"
               />
             </form>
 
             {!user ? (
               <div className="flex flex-col gap-1 px-2 pt-2">
-                <Link to="/jobs" className="px-3 py-2 text-sm font-semibold rounded-lg hover:bg-slate-100">
+                <Link to="/jobs" className="px-3 py-2 text-sm font-semibold text-charcoal-800 rounded-xl hover:bg-[#F3EFE6]">
                   Explore Jobs
                 </Link>
-                <Link to="/companies" className="px-3 py-2 text-sm font-semibold rounded-lg hover:bg-slate-100">
+                <Link to="/companies" className="px-3 py-2 text-sm font-semibold text-charcoal-800 rounded-xl hover:bg-[#F3EFE6]">
                   Companies
                 </Link>
-                <Link to="/login" className="px-3 py-2 text-sm font-semibold text-brand-600">
+                <a href="/#career-simulation" className="px-3 py-2 text-sm font-semibold text-charcoal-800 rounded-xl hover:bg-[#F3EFE6]">
+                  Career Simulation
+                </a>
+                <Link to="/login" className="px-3 py-2 text-sm font-bold text-charcoal-900 hover:text-brand-600">
                   Sign In
                 </Link>
-                <Link to="/register" className="px-3 py-2 text-sm font-semibold bg-brand-600 text-white rounded-lg text-center">
-                  Join Now
+                <Link to="/register" className="px-3 py-2.5 text-sm font-bold bg-brand-600 text-white rounded-xl text-center shadow-md">
+                  Get Started
                 </Link>
               </div>
             ) : (
               <div className="flex flex-col gap-1 px-2">
-                <div className="px-3 py-2 border-b border-slate-100 mb-1">
-                  <p className="font-bold text-slate-900">{user.name}</p>
-                  <p className="text-xs text-slate-500">{user.email} ({user.role})</p>
+                <div className="px-3 py-2 border-b border-[#E8DFC9] mb-1">
+                  <p className="font-bold text-charcoal-950">{user.name}</p>
+                  <p className="text-xs text-charcoal-500">{user.email} ({user.role})</p>
                 </div>
 
                 {user.role === 'Job Seeker' && (
                   <>
-                    <Link to="/home" className="px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100">Feed / Recommendations</Link>
-                    <Link to="/jobs" className="px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100">Search Jobs</Link>
-                    <Link to="/companies" className="px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100">Companies</Link>
-                    <Link to="/applications" className="px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100">Applied Jobs</Link>
-                    <Link to="/saved-jobs" className="px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100">Saved Jobs</Link>
-                    <Link to="/profile" className="px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100">My Profile</Link>
+                    <Link to="/home" className="px-3 py-2 text-sm font-medium text-charcoal-800 rounded-xl hover:bg-[#F3EFE6]">Feed / Recommendations</Link>
+                    <Link to="/jobs" className="px-3 py-2 text-sm font-medium text-charcoal-800 rounded-xl hover:bg-[#F3EFE6]">Search Jobs</Link>
+                    <Link to="/companies" className="px-3 py-2 text-sm font-medium text-charcoal-800 rounded-xl hover:bg-[#F3EFE6]">Companies</Link>
+                    <a href="/#career-simulation" className="px-3 py-2 text-sm font-medium text-charcoal-800 rounded-xl hover:bg-[#F3EFE6]">Career Simulation</a>
+                    <Link to="/applications" className="px-3 py-2 text-sm font-medium text-charcoal-800 rounded-xl hover:bg-[#F3EFE6]">Applied Jobs</Link>
+                    <Link to="/saved-jobs" className="px-3 py-2 text-sm font-medium text-charcoal-800 rounded-xl hover:bg-[#F3EFE6]">Saved Jobs</Link>
+                    <Link to="/profile" className="px-3 py-2 text-sm font-medium text-charcoal-800 rounded-xl hover:bg-[#F3EFE6]">My Profile</Link>
                   </>
                 )}
 
                 {user.role === 'Recruiter' && (
                   <>
-                    <Link to="/recruiter/dashboard" className="px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100">Dashboard</Link>
-                    <Link to="/recruiter/post-job" className="px-3 py-2 text-sm font-semibold text-brand-600">Post a Job</Link>
-                    <Link to="/recruiter/jobs" className="px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100">Posted Jobs</Link>
-                    <Link to="/companies" className="px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100">Companies</Link>
-                    <Link to="/recruiter/applicants" className="px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100">Applicants</Link>
-                    <Link to="/recruiter/profile" className="px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100">Company Profile</Link>
+                    <Link to="/recruiter/dashboard" className="px-3 py-2 text-sm font-medium text-charcoal-800 rounded-xl hover:bg-[#F3EFE6]">Dashboard</Link>
+                    <Link to="/recruiter/post-job" className="px-3 py-2 text-sm font-bold text-brand-600">Post a Job</Link>
+                    <Link to="/recruiter/jobs" className="px-3 py-2 text-sm font-medium text-charcoal-800 rounded-xl hover:bg-[#F3EFE6]">Posted Jobs</Link>
+                    <Link to="/companies" className="px-3 py-2 text-sm font-medium text-charcoal-800 rounded-xl hover:bg-[#F3EFE6]">Companies</Link>
+                    <Link to="/recruiter/applicants" className="px-3 py-2 text-sm font-medium text-charcoal-800 rounded-xl hover:bg-[#F3EFE6]">Applicants</Link>
+                    <Link to="/recruiter/profile" className="px-3 py-2 text-sm font-medium text-charcoal-800 rounded-xl hover:bg-[#F3EFE6]">Company Profile</Link>
                   </>
                 )}
 
                 {user.role === 'Admin' && (
                   <>
-                    <Link to="/admin/dashboard" className="px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100">Admin Dashboard</Link>
-                    <Link to="/admin/users" className="px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100">Manage Users</Link>
-                    <Link to="/admin/recruiters" className="px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100">Manage Recruiters</Link>
-                    <Link to="/admin/jobs" className="px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100">Manage Jobs</Link>
-                    <Link to="/admin/companies" className="px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100">Company Directory</Link>
-                    <Link to="/admin/applications" className="px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100">Platform Applications</Link>
-                    <Link to="/admin/reports" className="px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100">Reports</Link>
-                    <Link to="/admin/analytics" className="px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100">Platform Analytics</Link>
+                    <Link to="/admin/dashboard" className="px-3 py-2 text-sm font-medium text-charcoal-800 rounded-xl hover:bg-[#F3EFE6]">Admin Dashboard</Link>
+                    <Link to="/admin/users" className="px-3 py-2 text-sm font-medium text-charcoal-800 rounded-xl hover:bg-[#F3EFE6]">Manage Users</Link>
+                    <Link to="/admin/recruiters" className="px-3 py-2 text-sm font-medium text-charcoal-800 rounded-xl hover:bg-[#F3EFE6]">Manage Recruiters</Link>
+                    <Link to="/admin/jobs" className="px-3 py-2 text-sm font-medium text-charcoal-800 rounded-xl hover:bg-[#F3EFE6]">Manage Jobs</Link>
+                    <Link to="/admin/companies" className="px-3 py-2 text-sm font-medium text-charcoal-800 rounded-xl hover:bg-[#F3EFE6]">Company Directory</Link>
+                    <Link to="/admin/applications" className="px-3 py-2 text-sm font-medium text-charcoal-800 rounded-xl hover:bg-[#F3EFE6]">Platform Applications</Link>
+                    <Link to="/admin/reports" className="px-3 py-2 text-sm font-medium text-charcoal-800 rounded-xl hover:bg-[#F3EFE6]">Reports</Link>
+                    <Link to="/admin/analytics" className="px-3 py-2 text-sm font-medium text-charcoal-800 rounded-xl hover:bg-[#F3EFE6]">Platform Analytics</Link>
                   </>
                 )}
 
-                <Link to="/settings" className="px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100">Account Settings</Link>
+                <Link to="/settings" className="px-3 py-2 text-sm font-medium text-charcoal-800 rounded-xl hover:bg-[#F3EFE6]">Account Settings</Link>
                 <button
                   onClick={logout}
-                  className="px-3 py-2 text-sm font-medium text-rose-600 text-left rounded-lg hover:bg-rose-50"
+                  className="px-3 py-2 text-sm font-bold text-coral-600 text-left rounded-xl hover:bg-coral-50"
                 >
                   Sign Out
                 </button>

@@ -142,39 +142,39 @@ const RegisterPage = () => {
       <div className="max-w-xl w-full space-y-6">
         {/* Header */}
         <div className="text-center space-y-2">
-          <Link to="/" className="inline-flex items-center gap-2">
-            <div className="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center text-white font-bold text-xl shadow-md">
-              <Briefcase className="w-5 h-5" />
+          <Link to="/" className="inline-flex items-center gap-2.5">
+            <div className="w-10 h-10 rounded-xl bg-charcoal-900 border border-brand-500/30 flex items-center justify-center text-white font-black text-sm shadow-md">
+              <span className="text-brand-400">CS</span>E
             </div>
-            <span className="font-extrabold text-2xl tracking-tight text-slate-900">
-              Job<span className="text-brand-600">Connect</span>
+            <span className="font-extrabold text-2xl tracking-tight text-charcoal-900">
+              Career Simulation <span className="text-brand-500">Engine</span>
             </span>
           </Link>
-          <h2 className="text-2xl font-bold text-slate-900">Create your account</h2>
-          <p className="text-xs sm:text-sm text-slate-500">
-            Join the professional career & employer network
+          <h2 className="text-2xl font-bold text-charcoal-900 font-display">Create your account</h2>
+          <p className="text-xs sm:text-sm text-charcoal-600">
+            Join the premium career exploration & simulation ecosystem
           </p>
         </div>
 
         {/* Form Card */}
-        <div className="bg-white p-8 rounded-2xl shadow-xl border border-slate-200 space-y-6">
+        <div className="bg-[#FDFBF7] p-8 rounded-2xl shadow-xl border border-[#E8DFC8]/70 space-y-6">
           {errorMessage && (
-            <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold">
+            <div className="p-3.5 rounded-xl bg-coral-50 border border-coral-200 text-coral-700 text-xs font-semibold">
               {errorMessage}
             </div>
           )}
 
           {/* Account Type Selector */}
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+            <label className="block text-xs font-bold uppercase tracking-wider text-charcoal-600 mb-2">
               Select Account Type
             </label>
             <div className="grid grid-cols-2 gap-3">
               <label
                 className={`p-3.5 rounded-xl border-2 cursor-pointer flex items-start gap-3 transition-all ${
                   role === 'Job Seeker'
-                    ? 'border-brand-600 bg-brand-50/50 text-brand-900 shadow-sm'
-                    : 'border-slate-200 hover:border-slate-300 text-slate-600'
+                    ? 'border-brand-500 bg-brand-50/70 text-charcoal-900 shadow-sm'
+                    : 'border-[#E8DFC8] hover:border-brand-300 text-charcoal-600 bg-white'
                 }`}
               >
                 <input
@@ -183,19 +183,19 @@ const RegisterPage = () => {
                   value="Job Seeker"
                   checked={role === 'Job Seeker'}
                   onChange={() => setRole('Job Seeker')}
-                  className="mt-1 text-brand-600 focus:ring-brand-500"
+                  className="mt-1 text-brand-500 focus:ring-brand-500"
                 />
                 <div>
-                  <p className="text-sm font-bold">User / Job Seeker</p>
-                  <p className="text-xs text-slate-500 mt-0.5">Discover jobs & apply</p>
+                  <p className="text-sm font-bold text-charcoal-900">User / Job Seeker</p>
+                  <p className="text-xs text-charcoal-500 mt-0.5">Explore simulations & apply</p>
                 </div>
               </label>
 
               <label
                 className={`p-3.5 rounded-xl border-2 cursor-pointer flex items-start gap-3 transition-all ${
                   role === 'Recruiter'
-                    ? 'border-brand-600 bg-brand-50/50 text-brand-900 shadow-sm'
-                    : 'border-slate-200 hover:border-slate-300 text-slate-600'
+                    ? 'border-brand-500 bg-brand-50/70 text-charcoal-900 shadow-sm'
+                    : 'border-[#E8DFC8] hover:border-brand-300 text-charcoal-600 bg-white'
                 }`}
               >
                 <input
@@ -204,11 +204,11 @@ const RegisterPage = () => {
                   value="Recruiter"
                   checked={role === 'Recruiter'}
                   onChange={() => setRole('Recruiter')}
-                  className="mt-1 text-brand-600 focus:ring-brand-500"
+                  className="mt-1 text-brand-500 focus:ring-brand-500"
                 />
                 <div>
-                  <p className="text-sm font-bold">Recruiter</p>
-                  <p className="text-xs text-slate-500 mt-0.5">Post jobs & hire talent</p>
+                  <p className="text-sm font-bold text-charcoal-900">Recruiter</p>
+                  <p className="text-xs text-charcoal-500 mt-0.5">Post opportunities & hire talent</p>
                 </div>
               </label>
             </div>
@@ -509,17 +509,17 @@ const RegisterPage = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm rounded-xl shadow-md transition-all flex items-center justify-center gap-2 mt-4"
+              className="w-full py-3 bg-brand-500 hover:bg-brand-600 text-white font-bold text-sm rounded-xl shadow-md hover:shadow-brand-500/25 transition-all flex items-center justify-center gap-2 mt-5 disabled:opacity-60 cursor-pointer"
             >
               {loading && <Loader2 className="w-4 h-4 animate-spin" />}
               <span>{loading ? 'Creating Account...' : 'Register Account'}</span>
             </button>
           </form>
 
-          <div className="border-t border-slate-100 pt-4 text-center">
-            <p className="text-sm text-slate-600">
+          <div className="border-t border-[#E8DFC8]/60 pt-4 text-center">
+            <p className="text-sm text-charcoal-600">
               Already have an account?{' '}
-              <Link to="/login" className="font-bold text-brand-600 hover:underline">
+              <Link to="/login" className="font-bold text-brand-600 hover:text-brand-700 hover:underline">
                 Sign In
               </Link>
             </p>

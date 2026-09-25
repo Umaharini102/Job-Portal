@@ -66,24 +66,24 @@ const ApplicationsPage = () => {
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-charcoal-900 font-display">
           My Applications
         </h1>
-        <p className="text-xs sm:text-sm text-slate-500 mt-1">
-          Track the progress and status of your active job applications
+        <p className="text-xs sm:text-sm text-charcoal-500 mt-1">
+          Track the progress and status of your active career simulation submissions
         </p>
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex overflow-x-auto gap-2 pb-2 border-b border-slate-200">
+      <div className="flex overflow-x-auto gap-2 pb-2 border-b border-[#E8DFC8]/60">
         {statuses.map((status) => (
           <button
             key={status}
             onClick={() => setSelectedStatus(status)}
-            className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-colors ${
+            className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-colors cursor-pointer ${
               selectedStatus === status
-                ? 'bg-brand-600 text-white shadow-sm'
-                : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
+                ? 'bg-brand-500 text-white shadow-sm shadow-brand-500/25'
+                : 'bg-[#FDFBF7] border border-[#E8DFC8] text-charcoal-700 hover:bg-[#F5EFE6]'
             }`}
           >
             {status}
@@ -95,21 +95,21 @@ const ApplicationsPage = () => {
       {loading ? (
         <div className="space-y-4">
           {[1, 2, 3].map((n) => (
-            <div key={n} className="h-32 bg-white rounded-2xl border border-slate-200 animate-pulse p-6"></div>
+            <div key={n} className="h-32 bg-[#FDFBF7] rounded-2xl border border-[#E8DFC8] animate-pulse p-6"></div>
           ))}
         </div>
       ) : applications.length === 0 ? (
-        <div className="bg-white rounded-2xl p-12 text-center border border-slate-200 space-y-4">
-          <div className="w-14 h-14 bg-slate-100 rounded-full flex items-center justify-center mx-auto text-slate-400">
+        <div className="bg-[#FDFBF7] rounded-2xl p-12 text-center border border-[#E8DFC8]/80 shadow-sm space-y-4">
+          <div className="w-14 h-14 bg-[#F5EFE6] rounded-full flex items-center justify-center mx-auto text-charcoal-400">
             <FileText className="w-7 h-7" />
           </div>
-          <h3 className="font-bold text-slate-900 text-lg">No applications found</h3>
-          <p className="text-sm text-slate-500 max-w-sm mx-auto">
-            You haven’t applied for any roles matching this filter yet. Browse open jobs to submit your first application.
+          <h3 className="font-bold text-charcoal-900 text-lg font-display">No applications found</h3>
+          <p className="text-sm text-charcoal-500 max-w-sm mx-auto">
+            You haven’t applied for any roles matching this filter yet. Browse open opportunities to submit your first application.
           </p>
           <Link
             to="/jobs"
-            className="inline-block px-5 py-2.5 bg-brand-600 text-white text-xs font-bold rounded-xl hover:bg-brand-700 transition-colors"
+            className="inline-block px-5 py-2.5 bg-brand-500 text-white text-xs font-bold rounded-xl hover:bg-brand-600 transition-colors cursor-pointer"
           >
             Explore Open Jobs
           </Link>
@@ -121,11 +121,11 @@ const ApplicationsPage = () => {
             return (
               <div
                 key={app._id}
-                className="bg-white rounded-2xl p-6 border border-slate-200 hover:border-brand-200 shadow-sm transition-all space-y-4"
+                className="bg-[#FDFBF7] rounded-2xl p-6 border border-[#E8DFC8]/80 hover:border-brand-300 shadow-sm transition-all space-y-4"
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center overflow-hidden flex-shrink-0">
+                    <div className="w-12 h-12 rounded-xl bg-charcoal-900 border border-brand-500/30 flex items-center justify-center overflow-hidden flex-shrink-0">
                       {job?.companyLogo ? (
                         <img
                           src={getMediaUrl(job.companyLogo)}
@@ -133,7 +133,7 @@ const ApplicationsPage = () => {
                           className="w-full h-full object-cover"
                         />
                       ) : (
-                        <Briefcase className="w-6 h-6 text-brand-600" />
+                        <Briefcase className="w-6 h-6 text-brand-400" />
                       )}
                     </div>
 
@@ -142,22 +142,22 @@ const ApplicationsPage = () => {
                         {job ? (
                           <Link
                             to={`/job/${job._id}`}
-                            className="font-bold text-slate-900 hover:text-brand-600 text-base transition-colors"
+                            className="font-bold text-charcoal-900 hover:text-brand-600 text-base transition-colors font-display"
                           >
                             {job.title}
                           </Link>
                         ) : (
-                          <span className="font-bold text-slate-900 text-base">Job Listing No Longer Available</span>
+                          <span className="font-bold text-charcoal-900 text-base">Job Listing No Longer Available</span>
                         )}
                         <Badge variant={app.status}>{app.status}</Badge>
                       </div>
 
-                      <p className="text-xs font-semibold text-slate-700">{job?.companyName}</p>
+                      <p className="text-xs font-semibold text-charcoal-700">{job?.companyName}</p>
 
-                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-400">
+                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-charcoal-400">
                         {job?.location && (
                           <span className="flex items-center gap-1">
-                            <MapPin className="w-3 h-3" />
+                            <MapPin className="w-3 h-3 text-brand-500" />
                             {job.location} ({job.workMode})
                           </span>
                         )}
@@ -173,7 +173,7 @@ const ApplicationsPage = () => {
                     {app.coverLetter && (
                       <button
                         onClick={() => toggleNote(app._id)}
-                        className="px-3 py-1.5 bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-bold rounded-lg border border-slate-200 transition-colors flex items-center gap-1"
+                        className="px-3 py-1.5 bg-[#F5EFE6] hover:bg-brand-50 text-charcoal-700 text-xs font-bold rounded-lg border border-[#E8DFC8] transition-colors flex items-center gap-1 cursor-pointer"
                       >
                         <span>Cover Letter</span>
                         {expandedNotes[app._id] ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
@@ -182,7 +182,7 @@ const ApplicationsPage = () => {
 
                     <button
                       onClick={() => handleWithdraw(app._id)}
-                      className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
+                      className="p-2 text-charcoal-400 hover:text-coral-600 hover:bg-coral-50 rounded-lg transition-colors cursor-pointer"
                       title="Withdraw application"
                     >
                       <Trash2 className="w-4 h-4" />
@@ -192,8 +192,8 @@ const ApplicationsPage = () => {
 
                 {/* Collapsible Cover Letter */}
                 {expandedNotes[app._id] && app.coverLetter && (
-                  <div className="p-4 rounded-xl bg-slate-50 border border-slate-100 text-xs text-slate-700 space-y-1 animate-in fade-in">
-                    <p className="font-bold text-slate-900">Submitted Cover Note:</p>
+                  <div className="p-4 rounded-xl bg-[#FAF5EB] border border-[#E8DFC8]/60 text-xs text-charcoal-700 space-y-1 animate-in fade-in">
+                    <p className="font-bold text-charcoal-900">Submitted Cover Note:</p>
                     <p className="leading-relaxed whitespace-pre-line">{app.coverLetter}</p>
                   </div>
                 )}

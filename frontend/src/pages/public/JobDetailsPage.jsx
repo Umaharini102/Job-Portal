@@ -138,7 +138,7 @@ const JobDetailsPage = () => {
       </Link>
 
       {/* Top Job Hero Header Card */}
-      <div className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm relative overflow-hidden">
+      <div className="bg-[#FDFBF7] rounded-2xl p-6 sm:p-8 border border-[#E8DFC8]/80 shadow-sm relative overflow-hidden before:absolute before:top-0 before:left-0 before:h-1.5 before:w-28 before:bg-brand-500">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="flex items-start gap-4">
             <Link to={companyLink} title={`View ${companyName}`}>
@@ -151,8 +151,8 @@ const JobDetailsPage = () => {
             </Link>
 
             <div className="space-y-1">
-              <div className="flex flex-wrap items-center gap-2">
-                <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900">{job.title}</h1>
+              <div className="flex flex-wrap items-center gap-2.5">
+                <h1 className="text-2xl sm:text-3xl font-extrabold text-charcoal-900 font-display">{job.title}</h1>
                 <Badge variant={job.status === 'Active' ? 'success' : 'Closed'}>
                   {job.status}
                 </Badge>
@@ -161,40 +161,40 @@ const JobDetailsPage = () => {
               <div className="flex items-center gap-2 flex-wrap">
                 <Link
                   to={companyLink}
-                  className="text-base font-bold text-brand-600 hover:underline"
+                  className="text-base font-bold text-brand-600 hover:text-brand-700 hover:underline"
                 >
                   {companyName}
                 </Link>
 
                 {isVerified && (
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800">
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">
                     <CheckCircle2 className="w-3 h-3 text-emerald-600" />
-                    <span>Verified Company</span>
+                    <span>Verified Organization</span>
                   </span>
                 )}
 
                 {companyCategory && (
-                  <span className="text-[11px] font-semibold px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 border border-slate-200">
+                  <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded-md bg-[#F5EFE6] text-charcoal-700 border border-[#E8DFC8]/60">
                     {companyCategory}
                   </span>
                 )}
               </div>
 
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-500 font-medium pt-1">
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-charcoal-500 font-medium pt-1">
                 <span className="flex items-center gap-1">
-                  <MapPin className="w-3.5 h-3.5 text-slate-400" />
+                  <MapPin className="w-3.5 h-3.5 text-brand-500" />
                   {job.location} ({job.workMode})
                 </span>
                 <span className="flex items-center gap-1">
-                  <Briefcase className="w-3.5 h-3.5 text-slate-400" />
+                  <Briefcase className="w-3.5 h-3.5 text-charcoal-400" />
                   {job.jobType} • {job.experienceLevel}
                 </span>
-                <span className="flex items-center gap-1 font-bold text-slate-800">
-                  <DollarSign className="w-3.5 h-3.5 text-slate-400" />
+                <span className="flex items-center gap-1 font-bold text-charcoal-900">
+                  <DollarSign className="w-3.5 h-3.5 text-brand-500" />
                   {formatSalary(job.salaryMin, job.salaryMax)}
                 </span>
                 <span className="flex items-center gap-1">
-                  <Clock className="w-3.5 h-3.5 text-slate-400" />
+                  <Clock className="w-3.5 h-3.5 text-charcoal-400" />
                   Posted {new Date(job.createdAt).toLocaleDateString()}
                 </span>
               </div>
@@ -209,11 +209,11 @@ const JobDetailsPage = () => {
                 <span>Applied ({applicationStatus || 'Under Review'})</span>
               </div>
             ) : job.status === 'Closed' ? (
-              <div className="px-5 py-3 rounded-xl bg-slate-100 text-slate-500 font-bold text-sm">
+              <div className="px-5 py-3 rounded-xl bg-charcoal-100 text-charcoal-500 font-bold text-sm">
                 Job Posting Closed
               </div>
             ) : user?.role === 'Recruiter' || user?.role === 'Admin' ? (
-              <div className="text-xs font-semibold text-slate-500 bg-slate-100 px-4 py-2.5 rounded-xl">
+              <div className="text-xs font-semibold text-charcoal-600 bg-[#F5EFE6] px-4 py-2.5 rounded-xl border border-[#E8DFC8]/60">
                 Logged in as {user.role}
               </div>
             ) : (
@@ -225,7 +225,7 @@ const JobDetailsPage = () => {
                     setIsApplyModalOpen(true);
                   }
                 }}
-                className="flex-1 md:flex-initial px-8 py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm rounded-xl shadow-md transition-all flex items-center justify-center gap-2"
+                className="flex-1 md:flex-initial px-8 py-3 bg-brand-500 hover:bg-brand-600 text-white font-bold text-sm rounded-xl shadow-md hover:shadow-brand-500/25 transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span>Apply Now</span>
               </button>
@@ -233,19 +233,19 @@ const JobDetailsPage = () => {
 
             <button
               onClick={handleToggleSave}
-              className={`p-3 rounded-xl border transition-colors ${
+              className={`p-3 rounded-xl border transition-colors cursor-pointer ${
                 isSaved
-                  ? 'bg-brand-50 border-brand-200 text-brand-700'
-                  : 'border-slate-200 hover:bg-slate-50 text-slate-600'
+                  ? 'bg-brand-50 border-brand-300 text-brand-600'
+                  : 'border-[#E8DFC8] hover:bg-[#F6F0E6] text-charcoal-600'
               }`}
               title={isSaved ? 'Saved' : 'Save Job'}
             >
-              {isSaved ? <BookmarkCheck className="w-5 h-5 fill-brand-600 text-brand-600" /> : <Bookmark className="w-5 h-5" />}
+              {isSaved ? <BookmarkCheck className="w-5 h-5 fill-brand-500 text-brand-500" /> : <Bookmark className="w-5 h-5" />}
             </button>
 
             <button
               onClick={handleShare}
-              className="p-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 transition-colors"
+              className="p-3 rounded-xl border border-[#E8DFC8] hover:bg-[#F6F0E6] text-charcoal-600 transition-colors cursor-pointer"
               title="Share job"
             >
               <Share2 className="w-5 h-5" />
@@ -253,7 +253,7 @@ const JobDetailsPage = () => {
 
             <button
               onClick={() => setIsReportModalOpen(true)}
-              className="p-3 rounded-xl border border-slate-200 hover:bg-rose-50 hover:text-rose-600 text-slate-400 transition-colors"
+              className="p-3 rounded-xl border border-[#E8DFC8] hover:bg-coral-50 hover:text-coral-600 text-charcoal-400 transition-colors cursor-pointer"
               title="Report listing"
             >
               <Flag className="w-5 h-5" />
@@ -267,25 +267,25 @@ const JobDetailsPage = () => {
         {/* Left Column: Job Description & Details */}
         <div className="lg:col-span-2 space-y-6">
           {/* About the Role */}
-          <div className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4">
-            <h2 className="text-lg font-bold text-slate-900 border-b border-slate-100 pb-3">
+          <div className="bg-[#FDFBF7] rounded-2xl p-6 sm:p-8 border border-[#E8DFC8]/70 shadow-sm space-y-4">
+            <h2 className="text-lg font-bold text-charcoal-900 border-b border-[#E8DFC8]/60 pb-3 font-display">
               About the Role
             </h2>
-            <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-line">
+            <p className="text-sm text-charcoal-700 leading-relaxed whitespace-pre-line font-normal">
               {job.description}
             </p>
           </div>
 
           {/* Key Responsibilities */}
           {job.responsibilities && job.responsibilities.length > 0 && (
-            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4">
-              <h2 className="text-lg font-bold text-slate-900 border-b border-slate-100 pb-3">
+            <div className="bg-[#FDFBF7] rounded-2xl p-6 sm:p-8 border border-[#E8DFC8]/70 shadow-sm space-y-4">
+              <h2 className="text-lg font-bold text-charcoal-900 border-b border-[#E8DFC8]/60 pb-3 font-display">
                 Key Responsibilities
               </h2>
               <ul className="space-y-2.5">
                 {job.responsibilities.map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-3 text-sm text-slate-700 leading-relaxed">
-                    <Check className="w-4 h-4 text-brand-600 mt-0.5 flex-shrink-0" />
+                  <li key={idx} className="flex items-start gap-3 text-sm text-charcoal-700 leading-relaxed">
+                    <Check className="w-4 h-4 text-brand-500 mt-0.5 flex-shrink-0" />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -295,14 +295,14 @@ const JobDetailsPage = () => {
 
           {/* Requirements & Qualifications */}
           {job.requirements && job.requirements.length > 0 && (
-            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4">
-              <h2 className="text-lg font-bold text-slate-900 border-b border-slate-100 pb-3">
+            <div className="bg-[#FDFBF7] rounded-2xl p-6 sm:p-8 border border-[#E8DFC8]/70 shadow-sm space-y-4">
+              <h2 className="text-lg font-bold text-charcoal-900 border-b border-[#E8DFC8]/60 pb-3 font-display">
                 Requirements & Qualifications
               </h2>
               <ul className="space-y-2.5">
                 {job.requirements.map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-3 text-sm text-slate-700 leading-relaxed">
-                    <Check className="w-4 h-4 text-brand-600 mt-0.5 flex-shrink-0" />
+                  <li key={idx} className="flex items-start gap-3 text-sm text-charcoal-700 leading-relaxed">
+                    <Check className="w-4 h-4 text-brand-500 mt-0.5 flex-shrink-0" />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -312,15 +312,15 @@ const JobDetailsPage = () => {
 
           {/* Skills Required */}
           {job.skills && job.skills.length > 0 && (
-            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4">
-              <h2 className="text-lg font-bold text-slate-900 border-b border-slate-100 pb-3">
+            <div className="bg-[#FDFBF7] rounded-2xl p-6 sm:p-8 border border-[#E8DFC8]/70 shadow-sm space-y-4">
+              <h2 className="text-lg font-bold text-charcoal-900 border-b border-[#E8DFC8]/60 pb-3 font-display">
                 Skills & Technologies
               </h2>
               <div className="flex flex-wrap gap-2">
                 {job.skills.map((skill, idx) => (
                   <span
                     key={idx}
-                    className="px-3 py-1.5 bg-slate-100 text-slate-800 rounded-lg text-xs font-semibold"
+                    className="px-3 py-1.5 bg-[#F5EFE6] text-charcoal-800 rounded-lg text-xs font-semibold border border-[#E8DFC8]/60"
                   >
                     {skill}
                   </span>
@@ -331,13 +331,13 @@ const JobDetailsPage = () => {
 
           {/* Benefits & Perks */}
           {job.benefits && job.benefits.length > 0 && (
-            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4">
-              <h2 className="text-lg font-bold text-slate-900 border-b border-slate-100 pb-3">
+            <div className="bg-[#FDFBF7] rounded-2xl p-6 sm:p-8 border border-[#E8DFC8]/70 shadow-sm space-y-4">
+              <h2 className="text-lg font-bold text-charcoal-900 border-b border-[#E8DFC8]/60 pb-3 font-display">
                 Benefits & Perks
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {job.benefits.map((benefit, idx) => (
-                  <div key={idx} className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50 border border-slate-100 text-xs font-semibold text-slate-800">
+                  <div key={idx} className="flex items-center gap-2.5 p-3 rounded-xl bg-[#F8F4EC] border border-[#E8DFC8]/50 text-xs font-semibold text-charcoal-800">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
                     <span>{benefit}</span>
                   </div>
@@ -349,8 +349,8 @@ const JobDetailsPage = () => {
 
         {/* Right Column: Company & Recruiter Profile */}
         <div className="space-y-6">
-          <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
-            <h3 className="text-base font-bold text-slate-900 border-b border-slate-100 pb-3">
+          <div className="bg-[#FDFBF7] rounded-2xl p-6 border border-[#E8DFC8]/70 shadow-sm space-y-4">
+            <h3 className="text-base font-bold text-charcoal-900 border-b border-[#E8DFC8]/60 pb-3 font-display">
               About the Company
             </h3>
 
@@ -365,43 +365,43 @@ const JobDetailsPage = () => {
               <div>
                 <Link
                   to={companyLink}
-                  className="font-bold text-slate-900 text-sm hover:text-brand-600 transition-colors"
+                  className="font-bold text-charcoal-900 text-sm hover:text-brand-600 transition-colors"
                 >
                   {companyName}
                 </Link>
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-charcoal-500">
                   {job.companyIndustry || job.recruiterProfile?.industry || 'Technology Solutions'}
                 </p>
               </div>
             </div>
 
             {(job.companyId?.description || job.recruiterProfile?.companyDescription) && (
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <p className="text-xs text-charcoal-600 leading-relaxed">
                 {job.companyId?.description || job.recruiterProfile?.companyDescription}
               </p>
             )}
 
-            <div className="space-y-2 text-xs text-slate-600 pt-2 border-t border-slate-100">
+            <div className="space-y-2 text-xs text-charcoal-600 pt-2 border-t border-[#E8DFC8]/60">
               {(job.companyId?.headquarters || job.recruiterProfile?.location) && (
                 <div className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4 text-slate-400 flex-shrink-0" />
+                  <MapPin className="w-4 h-4 text-brand-500 flex-shrink-0" />
                   <span>{job.companyId?.headquarters || job.recruiterProfile?.location}</span>
                 </div>
               )}
               {(job.companyId?.companySize || job.recruiterProfile?.companySize) && (
                 <div className="flex items-center gap-2">
-                  <Users className="w-4 h-4 text-slate-400 flex-shrink-0" />
+                  <Users className="w-4 h-4 text-charcoal-400 flex-shrink-0" />
                   <span>{job.companyId?.companySize || job.recruiterProfile?.companySize} employees</span>
                 </div>
               )}
               {(job.companyId?.website || job.recruiterProfile?.website) && (
                 <div className="flex items-center gap-2">
-                  <Globe className="w-4 h-4 text-slate-400 flex-shrink-0" />
+                  <Globe className="w-4 h-4 text-charcoal-400 flex-shrink-0" />
                   <a
                     href={job.companyId?.website || job.recruiterProfile?.website}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-brand-600 hover:underline flex items-center gap-1"
+                    className="text-brand-600 hover:underline flex items-center gap-1 font-medium"
                   >
                     <span>Visit Official Website</span>
                     <ExternalLink className="w-3 h-3" />
@@ -410,10 +410,10 @@ const JobDetailsPage = () => {
               )}
             </div>
 
-            <div className="pt-3 border-t border-slate-100 space-y-2">
+            <div className="pt-3 border-t border-[#E8DFC8]/60 space-y-2">
               <Link
                 to={companyLink}
-                className="w-full py-2 bg-brand-50 hover:bg-brand-100 text-brand-700 text-xs font-bold rounded-xl border border-brand-200 transition-colors flex items-center justify-center gap-1.5"
+                className="w-full py-2.5 bg-[#F5EFE6] hover:bg-brand-50 text-brand-700 text-xs font-bold rounded-xl border border-[#E8DFC8] transition-colors flex items-center justify-center gap-1.5"
               >
                 <span>View Company Profile & All Openings →</span>
               </Link>
@@ -421,12 +421,12 @@ const JobDetailsPage = () => {
           </div>
 
           {/* Trust & Safety notice */}
-          <div className="bg-gradient-to-br from-brand-50 to-slate-50 p-5 rounded-2xl border border-brand-100 space-y-2">
-            <div className="flex items-center gap-2 text-brand-900 font-bold text-xs">
-              <ShieldCheck className="w-4 h-4 text-brand-600" />
-              <span>JobConnect Verification Guarantee</span>
+          <div className="bg-gradient-to-br from-[#FFF9F2] to-[#FAF6ED] p-5 rounded-2xl border border-[#E8DFC8] space-y-2">
+            <div className="flex items-center gap-2 text-charcoal-900 font-bold text-xs">
+              <ShieldCheck className="w-4 h-4 text-brand-500" />
+              <span>Career Simulation Engine Verified</span>
             </div>
-            <p className="text-xs text-slate-600 leading-relaxed">
+            <p className="text-xs text-charcoal-600 leading-relaxed">
               This employer has completed identity verification. Never send money or banking details during an application process.
             </p>
           </div>
